@@ -4,14 +4,23 @@
 
 body {
   font-family: 'Noto Serif', serif;
+  display: flex;
+  justify-content: center;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 #root {
-  padding: 1rem;
+  overflow-x: hidden;
+  margin: 1rem;
+  width: 100%;
+  max-width: 1536px;
 }
 
 @media only screen and (min-width: 768px) {
   #root {
-    padding: 2rem 4rem;
+    margin: 2rem 4rem;
   }
 }
