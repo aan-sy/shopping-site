@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
-import { login, logout, onUserStateChanged } from '../api/firebase';
+import { useAuth } from '../context/AuthContext';
 import User from './User';
 
 export default function Header() {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    onUserStateChanged(user => setUser(user))
-  }, [])
+  const { user, login, logout } = useAuth();
 
   return (
     <header className='mb-8'>
