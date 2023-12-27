@@ -28,6 +28,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
+            ["@firebase/app", "npm:0.9.25"],\
             ["@types/react", "npm:18.2.43"],\
             ["@types/react-dom", "npm:18.2.17"],\
             ["@vitejs/plugin-react", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:4.2.1"],\
@@ -5543,6 +5544,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["shopping", "workspace:."],\
+            ["@firebase/app", "npm:0.9.25"],\
             ["@types/react", "npm:18.2.43"],\
             ["@types/react-dom", "npm:18.2.17"],\
             ["@vitejs/plugin-react", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:4.2.1"],\

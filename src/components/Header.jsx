@@ -18,7 +18,7 @@ export default function Header() {
         </Link>
         <div className='md:order-first flex gap-x-4 justify-end md:justify-start md:w-64'>
           <Link to='/shop'>SHOP</Link>
-          <Link to='/shop/new'>ADD NEW</Link>
+          {user && user.isAdmin && <Link to='/shop/new'>ADD NEW</Link>}
         </div>
         <div className='flex gap-x-4 justify-end md:w-64'>
           <Link to='/order/cart'>CART</Link>
@@ -30,4 +30,3 @@ export default function Header() {
     </header>
   );
 }
-
