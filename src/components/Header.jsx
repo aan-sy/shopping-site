@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
+import { login, logout, onUserStateChanged } from '../api/firebase';
+import User from './User';
 
 export default function Header() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    onUserStateChanged(user => setUser(user))
+  }, [])
+
   return (
     <header className='mb-8'>
       <nav className='flex flex-wrap md:flex-nowrap gap-4 justify-start md:justify-between items-center text-base'>
@@ -13,8 +21,10 @@ export default function Header() {
           <Link to='/shop/new'>ADD NEW</Link>
         </div>
         <div className='flex gap-x-4 justify-end md:w-64'>
-          <button>LOGIN</button>
           <Link to='/order/cart'>CART</Link>
+          {!user && <button onClick={login}>LOGIN</button>}
+          {user && <button onClick={logout}>LOGOUT</button>}
+          {user && <User user={user} />}
         </div>
       </nav>
     </header>
