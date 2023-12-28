@@ -9,6 +9,7 @@ import Home from './pages/Home.jsx';
 import ProductDetail from './pages/ProductDetail.jsx';
 import NewProduct from './pages/NewProduct.jsx';
 import Cart from './pages/Cart.jsx';
+import ProtectedRouter from './pages/ProtectedRouter.jsx';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,12 @@ const router = createBrowserRouter([
       { path: "/shop", element: <Shop /> },
       { path: "/shop/:category", element: <Shop /> },
       { path: "/shop/detail/:productId", element: <ProductDetail /> },
-      { path: "/shop/new", element: <NewProduct /> },
+      { path: "/shop/new", 
+        element: 
+          <ProtectedRouter requireAdmin>
+            <NewProduct />
+          </ProtectedRouter> 
+      },
       { path: "/order/cart", element: <Cart /> },
     ],
   },
