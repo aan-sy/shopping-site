@@ -7,7 +7,7 @@ export default function Header() {
   const { user, login, logout } = useAuth();
 
   return (
-    <header className='mb-8'>
+    <header className='mb-16'>
       <nav className='flex flex-wrap md:flex-nowrap gap-4 justify-start md:justify-between items-center text-base'>
         <Link to='/' className='w-full md:w-auto'>
           <h1 className='w-60'><img src='/images/logo.png' alt='urbanic30' /></h1>
