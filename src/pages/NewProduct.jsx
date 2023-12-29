@@ -5,6 +5,8 @@ import { addNewProduct } from '../api/firebase';
 export default function NewProduct() {
   const [product, setProduct] = useState({});
   const [file, setFile] = useState();
+  const [isUploading, setIsUploading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleChange = (e) => {
     let {name, value, files} = e.target;
@@ -17,24 +19,30 @@ export default function NewProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      setIsUploading(true);
       const response = await uploadImage(file);
       const newURL = response.url;
-      addNewProduct(product, newURL);
+      const _ = await addNewProduct(product, newURL);
+      setIsSuccess(true);
+      setTimeout(() => {setIsSuccess(false)}, 3000)
       setProduct({});
       setFile();
     } catch(e) {
       console.error(e)
+    } finally {
+      setIsUploading(false);
     }
   }
 
   return (
     <section className='flex flex-col items-center'>
       <h2 className='mb-8 text-xl'>Add New Product</h2>
-      <div className='flex gap-8 justify-center flex-col md:flex-row w-full'> 
-        {file && <div className='border w-full md:w-2/4'><img src={URL.createObjectURL(file)} alt="image" /></div>}
+      <div className='flex gap-8 justify-center items-center lg:items-start flex-col lg:flex-row w-full'> 
+        {file && <div className='w-auto lg:w-2/4'><img src={URL.createObjectURL(file)} alt="image" /></div>}
         <form 
-          className='flex flex-col gap-4 w-full md:w-2/4 max-w-screen-md'
+          className='flex flex-col gap-4 w-full lg:w-2/4 max-w-screen-md'
           onSubmit={handleSubmit}
         >
           <input 
@@ -89,7 +97,8 @@ export default function NewProduct() {
             onChange={handleChange}
             className='border border-gray-300 rounded-lg p-2'
           />
-          <button className='bg-gray-100 rounded-lg p-4'>등록</button>
+          {isSuccess && <p>✔️ 등록이 완료되었습니다.</p>}
+          <button className={`rounded-lg p-4 ${isUploading ? 'bg-gray-50' : 'bg-gray-100'}`} disabled={isUploading}>등록</button>
         </form>
       </div>
     </section>

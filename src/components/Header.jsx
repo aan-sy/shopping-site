@@ -8,15 +8,15 @@ export default function Header() {
 
   return (
     <header className='mb-16'>
-      <nav className='flex flex-wrap md:flex-nowrap gap-4 justify-start md:justify-between items-center text-base'>
-        <Link to='/' className='w-full md:w-auto'>
+      <nav className='flex flex-wrap lg:flex-nowrap gap-4 justify-start lg:justify-between items-center text-base'>
+        <Link to='/' className='w-full lg:w-auto'>
           <h1 className='w-60'><img src='/images/logo.png' alt='urbanic30' /></h1>
         </Link>
-        <div className='md:order-first flex gap-x-4 justify-end md:justify-start md:w-64'>
+        <div className='lg:order-first flex gap-x-4 justify-end lg:justify-start lg:w-64'>
           <Link to='/shop'>SHOP</Link>
           {user && user.isAdmin && <Link to='/shop/new'>ADD NEW</Link>}
         </div>
-        <div className='flex gap-x-4 justify-end md:w-64'>
+        <div className='flex gap-x-4 justify-end lg:w-64'>
           <Link to='/order/cart'>CART</Link>
           {!user && <button onClick={login}>LOGIN</button>}
           {user && <button onClick={logout}>LOGOUT</button>}
