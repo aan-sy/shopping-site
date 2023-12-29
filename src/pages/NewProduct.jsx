@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { uploadImage } from '../api/uploader';
 
 export default function NewProduct() {
   const [product, setProduct] = useState({});
@@ -7,7 +8,7 @@ export default function NewProduct() {
   const handleChange = (e) => {
     let {name, value, files} = e.target;
 
-    if (name === 'file') {
+    if (name === 'image') {
       setFile(files && files[0]);
       return;
     }
@@ -16,8 +17,16 @@ export default function NewProduct() {
     setProduct(product => ({...product, [name]: value}));
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await uploadImage(file);
+      const newURL = response.url;     
+      console.log(newURL);
+      setProduct(product => ({...product, image: newURL}));
+    } catch(e) {
+      console.error(e)
+    }
   }
 
   return (
@@ -32,7 +41,7 @@ export default function NewProduct() {
           <input 
             type='file'
             accept='image/*'
-            name='file'
+            name='image'
             required
             onChange={handleChange} 
             className='border border-gray-300 rounded-lg p-2'
@@ -60,6 +69,15 @@ export default function NewProduct() {
             name='options'
             value={product.options ?? ''}
             placeholder='상품 옵션 (쉼표(,)로 구분)'
+            required
+            onChange={handleChange} 
+            className='border border-gray-300 rounded-lg p-2'
+          />
+          <input 
+            type='text'
+            name='category'
+            value={product.category ?? ''}
+            placeholder='상품 카테고리'
             required
             onChange={handleChange} 
             className='border border-gray-300 rounded-lg p-2'
