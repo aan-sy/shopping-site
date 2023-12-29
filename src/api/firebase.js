@@ -6,7 +6,8 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged, 
 } from "firebase/auth";
-import { getDatabase, ref, get, child } from "firebase/database";
+import { getDatabase, ref, get, set } from "firebase/database";
+import { v4 as uuid } from 'uuid';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
@@ -30,16 +31,27 @@ export async function logout() {
 
 export async function onUserStateChanged(setUser) {
   onAuthStateChanged(auth, async (user) => {
-    const updatedUser = user ? await adminUser(user) : null;
+    const updatedUser = user ? await formatUser(user) : null;
     setUser(updatedUser);
   })
 }
 
-async function adminUser(user) {
+async function formatUser(user) {
   return get(ref(database, 'admins'))
     .then((snapshot) => {
       const admins = snapshot.val();
       const isAdmin = admins.includes(user.uid)
       return {...user, isAdmin}
     })
+}
+
+export async function addNewProduct(product, imageURL) {
+  const id = uuid();
+  set(ref(database, `produdcts/${id}`), {
+    ...product,
+    id,
+    price: parseInt(product.price),
+    image: imageURL,
+    options: product.options.split(','),
+  })
 }

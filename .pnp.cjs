@@ -44,6 +44,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:18.2.0"],\
             ["react-router-dom", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:6.20.1"],\
             ["tailwindcss", "npm:3.3.6"],\
+            ["uuid", "npm:9.0.1"],\
             ["vite", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:5.0.7"]\
           ],\
           "linkType": "SOFT"\
@@ -5663,6 +5664,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-dom", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:18.2.0"],\
             ["react-router-dom", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:6.20.1"],\
             ["tailwindcss", "npm:3.3.6"],\
+            ["uuid", "npm:9.0.1"],\
             ["vite", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:5.0.7"]\
           ],\
           "linkType": "SOFT"\
@@ -6159,6 +6161,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/util-deprecate-npm-1.0.2-e3fe1a219c-474acf1146.zip/node_modules/util-deprecate/",\
           "packageDependencies": [\
             ["util-deprecate", "npm:1.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["uuid", [\
+        ["npm:9.0.1", {\
+          "packageLocation": "./.yarn/cache/uuid-npm-9.0.1-39a8442bc6-39931f6da7.zip/node_modules/uuid/",\
+          "packageDependencies": [\
+            ["uuid", "npm:9.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\

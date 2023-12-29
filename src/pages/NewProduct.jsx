@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { uploadImage } from '../api/uploader';
+import { addNewProduct } from '../api/firebase';
 
 export default function NewProduct() {
   const [product, setProduct] = useState({});
@@ -7,13 +8,10 @@ export default function NewProduct() {
 
   const handleChange = (e) => {
     let {name, value, files} = e.target;
-
     if (name === 'image') {
       setFile(files && files[0]);
       return;
     }
-
-    value = (name !== 'options') ? value : value.split(',');
     setProduct(product => ({...product, [name]: value}));
   }
 
@@ -21,9 +19,10 @@ export default function NewProduct() {
     e.preventDefault();
     try {
       const response = await uploadImage(file);
-      const newURL = response.url;     
-      console.log(newURL);
-      setProduct(product => ({...product, image: newURL}));
+      const newURL = response.url;
+      addNewProduct(product, newURL);
+      setProduct({});
+      setFile();
     } catch(e) {
       console.error(e)
     }
@@ -69,7 +68,6 @@ export default function NewProduct() {
             name='options'
             value={product.options ?? ''}
             placeholder='상품 옵션 (쉼표(,)로 구분)'
-            required
             onChange={handleChange} 
             className='border border-gray-300 rounded-lg p-2'
           />
