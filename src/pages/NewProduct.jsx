@@ -91,7 +91,7 @@ export default function NewProduct() {
           <textarea 
             name='description' 
             cols='30' rows='10' 
-            value={product.description ?? ''}
+            value={product.description ?? '•'}
             placeholder='상품 설명' 
             required
             onChange={handleChange}
