@@ -1330,6 +1330,43 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:5.15.5":
+  version: 5.15.5
+  resolution: "@tanstack/query-core@npm:5.15.5"
+  checksum: 95e961d659e12b4ce7c69a01929dbae4925707604a82305f3577fc6171f691d7483ceb68fb15504bb2d53eecb17bcb089f78ccc97e881686d77c64537493a3da
+  languageName: node
+  linkType: hard
+
+"@tanstack/query-devtools@npm:5.15.0":
+  version: 5.15.0
+  resolution: "@tanstack/query-devtools@npm:5.15.0"
+  checksum: 91dc1cc4362bf5ee6b504fdfb95ccba784bf302bcb086b74a5ad04662c438fedc95150ba0460ae2d9e658f486877dc380e861a4140e23e7d834ec5c517a51511
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query-devtools@npm:^5.15.5":
+  version: 5.15.5
+  resolution: "@tanstack/react-query-devtools@npm:5.15.5"
+  dependencies:
+    "@tanstack/query-devtools": 5.15.0
+  peerDependencies:
+    "@tanstack/react-query": ^5.15.5
+    react: ^18.0.0
+  checksum: 9afe78d0b89f59448487dddf00f4f9b5978652c37f9623d824a5ee31102be853808813cefc067872217d1ed18910e6b2c9d2328c70b7b5ce521b6f85dba9d06c
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.15.5":
+  version: 5.15.5
+  resolution: "@tanstack/react-query@npm:5.15.5"
+  dependencies:
+    "@tanstack/query-core": 5.15.5
+  peerDependencies:
+    react: ^18.0.0
+  checksum: 29ae71d70ccc5bc027b629e9b690f93328429420d83783890cad9e30043a0843285f6f4dcfbc4871b1f2e4fea9853ac4900bb324982ba44b5eecaecf6a7d8411
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.20.5":
   version: 7.20.5
   resolution: "@types/babel__core@npm:7.20.5"
@@ -4472,6 +4509,8 @@ __metadata:
   resolution: "shopping@workspace:."
   dependencies:
     "@firebase/app": ^0.9.25
+    "@tanstack/react-query": ^5.15.5
+    "@tanstack/react-query-devtools": ^5.15.5
     "@types/react": ^18.2.37
     "@types/react-dom": ^18.2.15
     "@vitejs/plugin-react": ^4.2.0

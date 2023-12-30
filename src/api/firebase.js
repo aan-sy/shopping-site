@@ -47,11 +47,21 @@ async function formatUser(user) {
 
 export async function addNewProduct(product, imageURL) {
   const id = uuid();
-  set(ref(database, `produdcts/${id}`), {
+  set(ref(database, `products/${id}`), {
     ...product,
     id,
     price: parseInt(product.price),
     image: imageURL,
-    options: product.options.split(','),
+    options: product.options ? product.options.split(',') : [],
+  })
+}
+
+export async function getProducts() {
+  console.log('get')
+  return get(ref(database, 'products')).then(snapshot => {
+    if (snapshot.exists()) {
+      return Object.values(snapshot.val()); 
+    }
+    return [];
   })
 }

@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@firebase/app": "^0.9.25",
+    "@tanstack/react-query": "^5.15.5",
+    "@tanstack/react-query-devtools": "^5.15.5",
     "axios": "^1.6.3",
     "firebase": "^10.7.1",
     "react": "^18.2.0",
