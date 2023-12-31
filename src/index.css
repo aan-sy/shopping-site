@@ -10,17 +10,18 @@ body {
 
 * {
   box-sizing: border-box;
+  margin: 0;
 }
 
 #root {
   overflow-x: hidden;
-  margin: 1rem;
+  padding: 1rem;
   width: 100%;
   max-width: 1536px;
 }
 
 @media only screen and (min-width: 1024px) {
   #root {
-    margin: 2rem 4rem;
+    padding: 2rem 4rem;
   }
 }
