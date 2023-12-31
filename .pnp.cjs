@@ -44,6 +44,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["postcss", "npm:8.4.32"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:18.2.0"],\
+            ["react-icons", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:4.12.0"],\
             ["react-router-dom", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:6.20.1"],\
             ["tailwindcss", "npm:3.3.6"],\
             ["uuid", "npm:9.0.1"],\
@@ -5382,6 +5383,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["react-icons", [\
+        ["npm:4.12.0", {\
+          "packageLocation": "./.yarn/cache/react-icons-npm-4.12.0-8fe2109eaf-db82a14111.zip/node_modules/react-icons/",\
+          "packageDependencies": [\
+            ["react-icons", "npm:4.12.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:4.12.0", {\
+          "packageLocation": "./.yarn/__virtual__/react-icons-virtual-a96ba9c804/0/cache/react-icons-npm-4.12.0-8fe2109eaf-db82a14111.zip/node_modules/react-icons/",\
+          "packageDependencies": [\
+            ["react-icons", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:4.12.0"],\
+            ["@types/react", "npm:18.2.43"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["react-is", [\
         ["npm:16.13.1", {\
           "packageLocation": "./.yarn/cache/react-is-npm-16.13.1-a9b9382b4f-f7a19ac349.zip/node_modules/react-is/",\
@@ -5734,6 +5757,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["postcss", "npm:8.4.32"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:18.2.0"],\
+            ["react-icons", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:4.12.0"],\
             ["react-router-dom", "virtual:d4b0c1a8891ba3ee6892674b20a78d2dd285ba79559deecddad1f79ab2a3396c77ebab966948ba53bfbb5187b3a71fce849a1f82884eb6529445112e8852e6a6#npm:6.20.1"],\
             ["tailwindcss", "npm:3.3.6"],\
             ["uuid", "npm:9.0.1"],\

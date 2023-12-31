@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import { FiMinus, FiPlus  } from "react-icons/fi";
 
 export default function ProductDetail() {
   let {name, image, price, options, category, description} = useLocation().state;
   const [count, setCount] = useState(1);
+  const [selected, setSelected] = useState(options && options[0]);
+  const inputRef = useRef(null);
 
-  function handleKeyDown (e) {
+  function handleKeyDown(e) {
     if ((e.target.value === '' && Number(e.key) < 1) || '.-+'.includes(e.key)) {
       e.preventDefault();      
       setCount(1);
@@ -29,13 +32,14 @@ export default function ProductDetail() {
             {options && 
               <div className='flex gap-2'>
                 <label htmlFor='option' className='w-20'>Option</label>
-                <select name='option' id='option'>
+                <select name='option' id='option' value={selected} onChange={e => setSelected(e.target.value)} className='w-28'>
                   {options.map((option, i) => <option key={i} value={option}>{option}</option>)}
                 </select>
               </div>
             }
             <div className='flex gap-2'>
               <label htmlFor='quantity' className='w-20'>Qty.</label>
+              <button className='p-1.5' onClick={() => setCount(prev => prev - 1 < 1 ? 1 : prev - 1)}><FiMinus /></button>
               <input 
                 id='quantity'
                 type='number' 
@@ -43,14 +47,17 @@ export default function ProductDetail() {
                 value={count} 
                 onInput={e => setCount(e.target.value)}
                 onKeyDown={handleKeyDown}
+                ref={inputRef}
+                className='text-center w-12'
               />
+              <button className='p-1.5' onClick={() => setCount(prev => prev + 1)}><FiPlus /></button>
             </div>
             <button className='border border-black p-4 mt-4 w-full'>ADD TO CART</button>
           </div>
           <div className='flex flex-col gap-4 py-6'>
             <dl className='flex flex-col gap-4'>
               <dt>Detail</dt>
-              <dd className='whitespace-pre-line'>
+              <dd className='whitespace-pre-line text-sm'>
                 {description}
               </dd>
             </dl>
