@@ -6,7 +6,7 @@ import ProductCard from './ProductCard';
 export default function Products({ category }) {
   const {isLoading, error, data: products} = useQuery({ 
     queryKey: ['products'], 
-    queryFn: getProducts,
+    queryFn: async () => getProducts(),
     staleTime: 1000 * 60 * 5,
   })
 

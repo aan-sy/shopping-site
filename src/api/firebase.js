@@ -56,12 +56,14 @@ export async function addNewProduct(product, imageURL) {
   })
 }
 
-export async function getProducts() {
+export async function getProducts(productId) {
   console.log('get')
   return get(ref(database, 'products')).then(snapshot => {
     if (snapshot.exists()) {
-      return Object.values(snapshot.val()); 
+      return !productId ? 
+        Object.values(snapshot.val()) : 
+        Object.values(snapshot.val()).filter(product => product.id === productId)[0]
     }
-    return [];
+    return null;
   })
 }
