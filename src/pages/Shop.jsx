@@ -4,6 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 import { getProducts } from '../api/firebase';
 import ProductCard from '../components/ProductCard';
 
+const linkStyle = 'w-40 hover:text-black focus:text-black';
+
 export default function Shop() {
   const { category } = useParams();
   const {isLoading, error, data: products} = useQuery({ 
@@ -17,13 +19,13 @@ export default function Shop() {
   return (
     <section >
       <nav className='flex flex-col gap-1 text-lg mb-4 text-gray-500'>
-        <Link to='/shop' className='hover:text-black focus:text-black'>All</Link>
-        <Link to='/shop/outer' className='hover:text-black focus:text-black'>Outer</Link>
-        <Link to='/shop/top' className='hover:text-black focus:text-black'>Top</Link>
-        <Link to='/shop/bottom' className='hover:text-black focus:text-black'>Bottom</Link>
-        <Link to='/shop/denim' className='hover:text-black focus:text-black'>Denim</Link>
-        <Link to='/shop/accessories' className='hover:text-black focus:text-black'>Accessories</Link>
-        <Link to='/shop/shoes' className='hover:text-black focus:text-black'>Shoes</Link>
+        <Link to='/shop' className={linkStyle}>All</Link>
+        <Link to='/shop/outer'className={linkStyle}>Outer</Link>
+        <Link to='/shop/top' className={linkStyle}>Top</Link>
+        <Link to='/shop/bottom' className={linkStyle}>Bottom</Link>
+        <Link to='/shop/denim' className={linkStyle}>Denim</Link>
+        <Link to='/shop/accessories' className={linkStyle}>Accessories</Link>
+        <Link to='/shop/shoes' className={linkStyle}>Shoes</Link>
       </nav>
       {products && <ul className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4'>
         {

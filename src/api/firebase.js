@@ -73,3 +73,13 @@ export async function getProducts(productId) {
 export async function addOrUpdateToCart(uid, product) {
   set(ref(database, `carts/${uid}/${product.id + product.option}`), product)
 }
+
+export async function getCart(uid) {
+  console.log('get cart')
+  return get(ref(database, `carts/${uid}`)).then(snapshot => {
+    if(snapshot.exists()) {
+      const items = snapshot.val() || {}
+      return Object.entries(items);
+    }
+  })
+}

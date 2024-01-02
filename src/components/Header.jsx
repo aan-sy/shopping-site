@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useAuthContext } from '../context/AuthContext';
 import User from './User';
+import CartState from './CartState';
 
 export default function Header() {
   const { user, login, logout } = useAuthContext();
-  const [count, setCount] = useState(0);
   
   return (
     <header className='mb-12'>
@@ -18,7 +18,7 @@ export default function Header() {
           {user && user.isAdmin && <Link to='/shop/newProduct'>ADD NEW</Link>}
         </div>
         <div className='flex gap-x-4 justify-end lg:w-64'>
-          <Link to='/order/cart'>CART {<span>{`(${count})`}</span>}</Link>
+          {user && <Link to='/order/cart'><CartState /></Link>}
           {!user && <button onClick={login}>LOGIN</button>}
           {user && <button onClick={logout}>LOGOUT</button>}
           {user && <User user={user} />}
