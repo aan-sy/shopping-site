@@ -7,7 +7,7 @@ import { useAuthContext } from '../context/AuthContext';
 
 export default function ProductDetail() {
   const { productId } = useParams();
-  const { uid } = useAuthContext();
+  const { uid, login } = useAuthContext();
   const {isLoading, error, data: product} = useQuery({ 
     queryKey: ['product', productId], 
     queryFn: async () => getProducts(productId),
@@ -38,7 +38,7 @@ export default function ProductDetail() {
 
   function handleClick() {
     console.log('click add to cart!')
-    addOrUpdateToCart(uid, updatedProduct);
+    uid ? addOrUpdateToCart(uid, updatedProduct) : login();
   }
 
   if(isLoading) {return <p>Loading...</p>}
