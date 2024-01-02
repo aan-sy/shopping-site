@@ -10,11 +10,11 @@ export function AuthProvider({ children }) {
     onUserStateChanged(user => setUser(user))
   }, [])
 
-  return <AuthContext.Provider value={{user, login, logout}}>
+  return <AuthContext.Provider value={{user, uid: user && user.uid, login, logout}}>
     { children }
   </AuthContext.Provider>
 }
 
-export function useAuth() {
+export function useAuthContext() {
   return useContext(AuthContext)
 }

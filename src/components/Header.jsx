@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { useAuth } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 import User from './User';
 
 export default function Header() {
-  const { user, login, logout } = useAuth();
-
+  const { user, login, logout } = useAuthContext();
+  const [count, setCount] = useState(0);
+  
   return (
     <header className='mb-12'>
       <nav className='flex flex-wrap lg:flex-nowrap gap-4 justify-start lg:justify-between items-center text-base'>
@@ -17,7 +18,7 @@ export default function Header() {
           {user && user.isAdmin && <Link to='/shop/newProduct'>ADD NEW</Link>}
         </div>
         <div className='flex gap-x-4 justify-end lg:w-64'>
-          <Link to='/order/cart'>CART</Link>
+          <Link to='/order/cart'>CART {<span>{`(${count})`}</span>}</Link>
           {!user && <button onClick={login}>LOGIN</button>}
           {user && <button onClick={logout}>LOGOUT</button>}
           {user && <User user={user} />}

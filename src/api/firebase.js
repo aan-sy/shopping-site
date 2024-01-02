@@ -15,12 +15,12 @@ const firebaseConfig = {
   databaseURL: import.meta.env.VITE_FIREBASE_DATABASEURL,
   projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
 };
-
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
 const database = getDatabase(app);
 
+// AUTH
 export async function login() {
   signInWithPopup(auth, provider).catch(console.error);
 }
@@ -31,12 +31,13 @@ export async function logout() {
 
 export async function onUserStateChanged(setUser) {
   onAuthStateChanged(auth, async (user) => {
-    const updatedUser = user ? await formatUser(user) : null;
+    const updatedUser = user ? await checkAdmin(user) : null;
     setUser(updatedUser);
   })
 }
 
-async function formatUser(user) {
+async function checkAdmin(user) {
+  console.log('get admin user')
   return get(ref(database, 'admins'))
     .then((snapshot) => {
       const admins = snapshot.val();
@@ -45,6 +46,7 @@ async function formatUser(user) {
     })
 }
 
+// DB
 export async function addNewProduct(product, imageURL) {
   const id = uuid();
   set(ref(database, `products/${id}`), {
@@ -57,13 +59,17 @@ export async function addNewProduct(product, imageURL) {
 }
 
 export async function getProducts(productId) {
-  console.log('get')
+  console.log('get products');
   return get(ref(database, 'products')).then(snapshot => {
-    if (snapshot.exists()) {
+    if(snapshot.exists()) {
       return !productId ? 
         Object.values(snapshot.val()) : 
         Object.values(snapshot.val()).filter(product => product.id === productId)[0]
     }
     return null;
   })
+}
+
+export async function addOrUpdateToCart(uid, product) {
+  set(ref(database, `carts/${uid}/${product.id + product.option}`), product)
 }

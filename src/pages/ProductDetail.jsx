@@ -2,21 +2,44 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { FiMinus, FiPlus  } from "react-icons/fi";
-import { getProducts } from '../api/firebase';
+import { addOrUpdateToCart, getProducts } from '../api/firebase';
+import { useAuthContext } from '../context/AuthContext';
 
 export default function ProductDetail() {
   const { productId } = useParams();
+  const { uid } = useAuthContext();
   const {isLoading, error, data: product} = useQuery({ 
     queryKey: ['product', productId], 
     queryFn: async () => getProducts(productId),
     staleTime: 1000 * 60 * 5,
   })
+  const [updatedProduct, setUpdatedProduct] = useState({});
   const [count, setCount] = useState(1);
-  const [selected, setSelected] = useState(product && product.options && product.options[0]);
+  const [selected, setSelected] = useState('');
 
   useEffect(() => {
     window.scrollTo(0,0);
   }, [])
+
+  useEffect(() => {
+    if (product) {
+      const {id, name, image, price} = product;
+      setUpdatedProduct({id, name, image, price, quantity: count, option: selected});
+      if (product && product.options) {
+        setSelected(product.options[0]);
+        setUpdatedProduct({id, name, image, price, quantity: count, option: product.options[0]});
+      }
+    }
+  }, [product])
+
+  useEffect(() => {
+    product && setUpdatedProduct(prev => ({...prev, quantity: count, option: selected}));
+  }, [count, selected])
+
+  function handleClick() {
+    console.log('click add to cart!')
+    addOrUpdateToCart(uid, updatedProduct);
+  }
 
   if(isLoading) {return <p>Loading...</p>}
   if(error) {return <p>error</p>}
@@ -51,7 +74,7 @@ export default function ProductDetail() {
               />
               <button className='p-1.5' onClick={() => setCount(prev => prev + 1)} aria-label='increase quantity'><FiPlus /></button>
             </div>
-            <button className='border border-black p-4 mt-4 w-full'>ADD TO CART</button>
+            <button className='border border-black p-4 mt-4 w-full' onClick={handleClick}>ADD TO CART</button>
           </div>
           <div className='flex flex-col gap-4 py-6'>
             <dl className='flex flex-col gap-4'>
