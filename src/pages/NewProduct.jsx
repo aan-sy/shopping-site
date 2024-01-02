@@ -19,7 +19,6 @@ export default function NewProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       setIsUploading(true);
       const response = await uploadImage(file);
@@ -83,7 +82,7 @@ export default function NewProduct() {
             type='text'
             name='category'
             value={product.category ?? ''}
-            placeholder='상품 카테고리'
+            placeholder='상품 카테고리 (outer, top, bottom, denim, accessories, shoes)'
             required
             onChange={handleChange} 
             className='border border-gray-300 rounded-lg p-2'
@@ -98,7 +97,7 @@ export default function NewProduct() {
             className='border border-gray-300 rounded-lg p-2'
           />
           {isSuccess && <p>✔️ 등록이 완료되었습니다.</p>}
-          <button className={`rounded-lg p-4 ${isUploading ? 'bg-gray-50' : 'bg-gray-100'}`} disabled={isUploading}>등록</button>
+          <button className={`rounded-lg p-4 ${isUploading ? 'bg-gray-50 text-gray-300' : 'bg-gray-100'}`} disabled={isUploading}>등록</button>
         </form>
       </div>
     </section>
