@@ -6,7 +6,7 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged, 
 } from "firebase/auth";
-import { getDatabase, ref, get, set } from "firebase/database";
+import { getDatabase, ref, get, set, remove } from "firebase/database";
 import { v4 as uuid } from 'uuid';
 
 const firebaseConfig = {
@@ -31,6 +31,7 @@ export async function logout() {
 
 export async function onUserStateChanged(setUser) {
   onAuthStateChanged(auth, async (user) => {
+    console.log(user);
     const updatedUser = user ? await checkAdmin(user) : null;
     setUser(updatedUser);
   })
@@ -62,16 +63,19 @@ export async function getProducts(productId) {
   console.log('get products');
   return get(ref(database, 'products')).then(snapshot => {
     if(snapshot.exists()) {
-      return !productId ? 
-        Object.values(snapshot.val()) : 
-        Object.values(snapshot.val()).filter(product => product.id === productId)[0]
+      return !productId ? Object.values(snapshot.val()) : snapshot.val()[productId];
     }
     return null;
   })
 }
 
 export async function addOrUpdateToCart(uid, product) {
+  console.log(product);
   set(ref(database, `carts/${uid}/${product.id + product.option}`), product)
+}
+
+export async function removeCartItem(uid, product) {
+  remove(ref(database, `carts/${uid}/${product.id + product.option}`))
 }
 
 export async function getCart(uid) {
@@ -81,5 +85,6 @@ export async function getCart(uid) {
       const items = snapshot.val() || {}
       return Object.entries(items);
     }
+    return [];
   })
 }

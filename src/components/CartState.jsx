@@ -12,7 +12,7 @@ export default function CartState() {
 
   return (
     <span>
-      {cartItems && `CART (${cartItems.length})`}
+      {cartItems && `(${cartItems.length})`}
     </span>
   );
 }
