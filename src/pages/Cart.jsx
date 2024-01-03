@@ -18,7 +18,7 @@ export default function Cart() {
   cartItems && console.log(cartItems)
 
   const totalCost = cartItems && cartItems.reduce((accum, item) => {
-    return accum + (item[1].price * item[1].quantity)
+    return accum + (item.price * item.quantity)
   }, 0);
 
   if(isLoading) return <p>Loading..</p>
@@ -35,7 +35,7 @@ export default function Cart() {
       {hasItem && 
         <section>
           <ul>
-            {cartItems.map(item => <CartItem key={item[0]} uid={uid} item={item[1]} />)}
+            {cartItems.map(item => <CartItem key={item.cardId} uid={uid} item={item} />)}
           </ul>
           <dl className={`${dlStyle} text-sm text-gray-500`}>
             <dt>Order</dt>
