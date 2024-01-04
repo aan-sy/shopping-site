@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { uploadImage } from '../api/uploader';
 import { addNewProduct } from '../api/firebase';
+
+const inputStyle = 'border border-gray-300 rounded-lg p-2';
 
 export default function NewProduct() {
   const [product, setProduct] = useState({});
   const [file, setFile] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: ({product, url}) => addNewProduct(product, url),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['products']);
+    },
+  });
+  
   const handleChange = (e) => {
     let {name, value, files} = e.target;
     if (name === 'image') {
@@ -19,20 +29,17 @@ export default function NewProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      setIsUploading(true);
-      const response = await uploadImage(file);
-      const newURL = response.url;
-      const _ = await addNewProduct(product, newURL);
-      setIsSuccess(true);
-      setTimeout(() => {setIsSuccess(false)}, 3000)
-      setProduct({});
-      setFile();
-    } catch(e) {
-      console.error(e)
-    } finally {
-      setIsUploading(false);
-    }
+    setIsUploading(true);
+    const res = await uploadImage(file);
+    const url = res.url;
+    mutation.mutate({product, url}, {
+      onSuccess: () => {
+        setIsSuccess(true);
+        setTimeout(() => {setIsSuccess(false)}, 3000)
+        setProduct({});
+        setFile();
+      }
+    })
   }
 
   return (
@@ -50,7 +57,7 @@ export default function NewProduct() {
             name='image'
             required
             onChange={handleChange} 
-            className='border border-gray-300 rounded-lg p-2'
+            className={inputStyle}
           />
           <input 
             type='text'
@@ -59,7 +66,7 @@ export default function NewProduct() {
             placeholder='상품 이름'
             required
             onChange={handleChange} 
-            className='border border-gray-300 rounded-lg p-2'
+            className={inputStyle}
           />
           <input 
             type='number'
@@ -68,7 +75,7 @@ export default function NewProduct() {
             placeholder='상품 가격'
             required
             onChange={handleChange} 
-            className='border border-gray-300 rounded-lg p-2'
+            className={inputStyle}
           />
           <input 
             type='text'
@@ -76,7 +83,7 @@ export default function NewProduct() {
             value={product.options ?? ''}
             placeholder='상품 옵션 (쉼표(,)로 구분)'
             onChange={handleChange} 
-            className='border border-gray-300 rounded-lg p-2'
+            className={inputStyle}
           />
           <input 
             type='text'
@@ -85,7 +92,7 @@ export default function NewProduct() {
             placeholder='상품 카테고리 (outer, top, bottom, denim, accessories, shoes)'
             required
             onChange={handleChange} 
-            className='border border-gray-300 rounded-lg p-2'
+            className={inputStyle}
           />
           <textarea 
             name='description' 
@@ -94,7 +101,7 @@ export default function NewProduct() {
             placeholder='상품 설명' 
             required
             onChange={handleChange}
-            className='border border-gray-300 rounded-lg p-2'
+            className={inputStyle}
           />
           {isSuccess && <p>✔️ 등록이 완료되었습니다.</p>}
           <button className={`rounded-lg p-4 ${isUploading ? 'bg-gray-50 text-gray-300' : 'bg-gray-100'}`} disabled={isUploading}>등록</button>

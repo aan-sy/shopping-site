@@ -48,13 +48,14 @@ async function checkAdmin(user) {
 }
 
 // DB
-export async function addNewProduct(product, imageURL) {
+export async function addNewProduct(product, url) {
+  console.log('add new product to db')
   const id = uuid();
   set(ref(database, `products/${id}`), {
     ...product,
     id,
     price: parseInt(product.price),
-    image: imageURL,
+    image: url,
     options: product.options ? product.options.split(',') : [],
   })
 }
@@ -70,15 +71,14 @@ export async function getProducts(productId) {
 }
 
 export async function addOrUpdateToCart(uid, product) {
-  console.log(product);
   set(ref(database, `carts/${uid}/${product.id}_${product.option}`), {
     ...product,
     cartId: `${product.id}_${product.option}`
   })
 }
 
-export async function removeCartItem(uid, product) {
-  remove(ref(database, `carts/${uid}/${product.id + product.option}`))
+export async function removeFromCart(uid, cartId) {
+  remove(ref(database, `carts/${uid}/${cartId}`))
 }
 
 export async function getCart(uid) {
