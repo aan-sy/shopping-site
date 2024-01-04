@@ -1,9 +1,9 @@
 import React from 'react';
 import { FiMinus, FiPlus, FiX } from "react-icons/fi";
-import { addOrUpdateToCart, removeCartItem } from '../api/firebase';
+import { addOrUpdateToCart, removeFromCart } from '../api/firebase';
 
 export default function CartItem({ uid, item }) {
-  const {image, name, price, option, quantity} = item;
+  const {image, name, price, option, quantity, cartId} = item;
 
   function handleMinus() {
     if (quantity < 2) return;
@@ -15,7 +15,7 @@ export default function CartItem({ uid, item }) {
   }
 
   function handleDelete() {
-    removeCartItem(uid, item);
+    removeFromCart(uid, cartId);
   }
 
   return (

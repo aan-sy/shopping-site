@@ -79,7 +79,7 @@ export default function ProductDetail() {
           <div className='flex flex-col gap-4 py-6'>
             <dl className='flex flex-col gap-4'>
               <dt>Detail</dt>
-              <dd className='whitespace-pre-line text-sm'>
+              <dd className='whitespace-pre-line break-all text-sm'>
                 {product.description}
               </dd>
             </dl>
