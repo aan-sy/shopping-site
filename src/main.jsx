@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       },
       { 
         path: "/order/cart", 
-        element: <ProtectedRouter requireAdmin>
+        element: <ProtectedRouter>
           <Cart />
         </ProtectedRouter> },
     ],
