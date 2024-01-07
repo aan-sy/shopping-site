@@ -1,21 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { FiMinus, FiPlus  } from "react-icons/fi";
-import { addOrUpdateToCart, getProducts } from '../api/firebase';
-import { useAuthContext } from '../context/AuthContext';
+import useProduct from '../hooks/useProduct';
+import AddToCart from '../components/AddToCart';
 
 export default function ProductDetail() {
   const { productId } = useParams();
-  const { uid, login } = useAuthContext();
-  const {isLoading, error, data: product} = useQuery({ 
-    queryKey: ['product', productId], 
-    queryFn: async () => getProducts(productId),
-    staleTime: 1000 * 60 * 5,
-  })
-  const [updatedProduct, setUpdatedProduct] = useState({});
-  const [count, setCount] = useState(1);
-  const [selected, setSelected] = useState('');
+  const { productQuery } = useProduct();
+  const {isLoading, error, data: product} = productQuery(productId);
+  const [selectedProduct, setSelectedProduct] = useState({quantity: 1, option: ''});
 
   useEffect(() => {
     window.scrollTo(0,0);
@@ -24,22 +17,13 @@ export default function ProductDetail() {
   useEffect(() => {
     if (product) {
       const {id, name, image, price} = product;
-      setUpdatedProduct({id, name, image, price, quantity: count, option: selected});
-      if (product && product.options) {
-        setSelected(product.options[0]);
-        setUpdatedProduct({id, name, image, price, quantity: count, option: product.options[0]});
-      }
+      setSelectedProduct({id, name, image, price, quantity: 1, option: product.options ? product.options[0] : ''})
     }
   }, [product])
 
-  useEffect(() => {
-    product && setUpdatedProduct(prev => ({...prev, quantity: count, option: selected}));
-  }, [count, selected])
-
-  function handleClick() {
-    console.log('click add to cart!')
-    uid ? addOrUpdateToCart(uid, updatedProduct) : login();
-  }
+  const handleMinus = () => {setSelectedProduct(product => ({...product, quantity: (product.quantity - 1) < 1 ? 1 : product.quantity - 1}))}
+  const handlePlus = () => {setSelectedProduct(product => ({...product, quantity: product.quantity + 1}))}
+  const handleChangeOption = (e) => {setSelectedProduct(product => ({...product, option: e.target.value}))}
 
   if(isLoading) {return <p>Loading...</p>}
   if(error) {return <p>error</p>}
@@ -56,25 +40,25 @@ export default function ProductDetail() {
             {product.options && 
               <div className='flex gap-2'>
                 <label htmlFor='option' className='w-20'>Option</label>
-                <select name='option' id='option' value={selected} onChange={e => setSelected(e.target.value)} className='w-28'>
+                <select name='option' id='option' value={selectedProduct.option} onChange={handleChangeOption} className='w-28'>
                   {product.options.map((option, i) => <option key={i} value={option}>{option}</option>)}
                 </select>
               </div>
             }
             <div className='flex gap-2'>
               <label htmlFor='quantity' className='w-20'>Quantity</label>
-              <button className='p-1.5' onClick={() => setCount(prev => prev - 1 < 1 ? 1 : prev - 1)} aria-label='decrease quantity'><FiMinus /></button>
+              <button className='p-1.5' onClick={handleMinus} aria-label='minus quantity'><FiMinus /></button>
               <input 
                 id='quantity'
                 type='number' 
                 min='1' 
-                value={count} 
+                value={selectedProduct.quantity} 
                 disabled
                 className='text-center w-12 bg-transparent'
               />
-              <button className='p-1.5' onClick={() => setCount(prev => prev + 1)} aria-label='increase quantity'><FiPlus /></button>
+              <button className='p-1.5' onClick={handlePlus} aria-label='plus quantity'><FiPlus /></button>
             </div>
-            <button className='border border-black p-4 mt-4 w-full' onClick={handleClick}>ADD TO CART</button>
+            <AddToCart selectedProduct={selectedProduct} />
           </div>
           <div className='flex flex-col gap-4 py-6'>
             <dl className='flex flex-col gap-4'>

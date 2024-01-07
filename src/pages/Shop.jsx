@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { getProducts } from '../api/firebase';
+import useProduct from '../hooks/useProduct';
 import ProductCard from '../components/ProductCard';
 
 const linkStyle = 'w-40 hover:text-black focus:text-black';
@@ -9,11 +8,7 @@ const linkStyle = 'w-40 hover:text-black focus:text-black';
 export default function Shop() {
   const { category } = useParams();
   const [isAll, setIsAll] = useState(true);
-  const {isLoading, error, data: products} = useQuery({ 
-    queryKey: ['products'], 
-    queryFn: async () => getProducts(),
-    staleTime: 1000 * 60 * 5,
-  })
+  const { productListQuery: {isLoading, error, data: products} } = useProduct();
   function handleClick(e) {
     if (e.target.localName !== 'a') return;
     e.target.innerText === 'ALL' ? setIsAll(true) : setIsAll(false);

@@ -1,18 +1,13 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { useAuthContext } from '../context/AuthContext';
 import CartItem from '../components/CartItem';
+import useCart from '../hooks/useCart';
 
 const SHIPPING = 3000;
 const dlStyle = 'flex justify-between py-2 border-b border-black';
 
 export default function Cart() {
-  const { uid } = useAuthContext();
-  const {isLoading, data: cartItems} = useQuery({
-    queryKey: ['cartItems'],
-    queryFn: () => getCart(uid),
-  })
+  const { cartQuery: {isLoading, data: cartItems} } = useCart();
   const hasItem = cartItems && cartItems.length > 0;
 
   cartItems && console.log(cartItems)
@@ -34,7 +29,7 @@ export default function Cart() {
       {hasItem && 
         <section>
           <ul>
-            {cartItems.map(item => <CartItem key={item.cartId} uid={uid} item={item} />)}
+            {cartItems.map(item => <CartItem key={item.cartId} item={item} />)}
           </ul>
           <dl className={`${dlStyle} text-sm text-gray-500`}>
             <dt>Order</dt>

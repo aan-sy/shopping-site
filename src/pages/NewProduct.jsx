@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { uploadImage } from '../api/uploader';
-import { addNewProduct } from '../api/firebase';
+import useProduct from '../hooks/useProduct';
 
 const inputStyle = 'border border-gray-300 rounded-lg p-2';
 
@@ -10,13 +9,7 @@ export default function NewProduct() {
   const [file, setFile] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const queryClient = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: ({product, url}) => addNewProduct(product, url),
-    onSuccess: () => {
-      queryClient.invalidateQueries(['products']);
-    },
-  });
+  const { addProduct } = useProduct();
   
   const handleChange = (e) => {
     let {name, value, files} = e.target;
@@ -32,7 +25,7 @@ export default function NewProduct() {
     setIsUploading(true);
     const res = await uploadImage(file);
     const url = res.url;
-    mutation.mutate({product, url}, {
+    addProduct.mutate({product, url}, {
       onSuccess: () => {
         setIsSuccess(true);
         setTimeout(() => {setIsSuccess(false)}, 3000)
