@@ -31,14 +31,13 @@ export async function logout() {
 
 export async function onUserStateChanged(setUser) {
   onAuthStateChanged(auth, async (user) => {
-    console.log(user);
     const updatedUser = user ? await checkAdmin(user) : null;
     setUser(updatedUser);
   })
 }
 
 async function checkAdmin(user) {
-  console.log('get admin user')
+  // console.log('get admin user')
   return get(ref(database, 'admins'))
     .then((snapshot) => {
       const admins = snapshot.val();
@@ -49,7 +48,7 @@ async function checkAdmin(user) {
 
 // DB
 export async function addNewProduct(product, url) {
-  console.log('add new product to db')
+  // console.log('add new product to db')
   const id = uuid();
   set(ref(database, `products/${id}`), {
     ...product,
@@ -61,7 +60,7 @@ export async function addNewProduct(product, url) {
 }
 
 export async function getProducts(productId) {
-  console.log('get products');
+  // console.log('get products');
   return get(ref(database, 'products')).then(snapshot => {
     if(snapshot.exists()) {
       return !productId ? Object.values(snapshot.val()) : snapshot.val()[productId];
@@ -82,12 +81,22 @@ export async function removeFromCart(uid, cartId) {
 }
 
 export async function getCart(uid) {
-  console.log('get cart')
+  // console.log('get cart')
   return get(ref(database, `carts/${uid}`)).then(snapshot => {
     if(snapshot.exists()) {
       const items = snapshot.val() || {}
       return Object.values(items);
     }
     return [];
+  })
+}
+
+export async function getMainImages() {
+  // console.log('get main images');
+  return get(ref(database, 'images/main')).then(snapshot => {
+    if(snapshot.exists()) {
+      return snapshot.val();
+    }
+    return null;
   })
 }

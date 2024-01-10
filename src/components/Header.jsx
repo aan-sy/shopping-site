@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from '../context/AuthContext';
 import User from './User';
@@ -29,7 +29,6 @@ export default function Header() {
           </button>
           {!user && <button onClick={login}>LOGIN</button>}
           {user && <button onClick={logout}>LOGOUT</button>}
-          {user && <User user={user} />}
         </div>
       </nav>
     </header>

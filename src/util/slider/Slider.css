@@ -1,0 +1,34 @@
+.slider {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.7s ease;
+}
+
+.slide:nth-child(n + 2) {
+  transform: translateY(100%);
+}
+
+.slide__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+}
+
+.slide:nth-child(3) .slide__image,
+.slide:nth-child(4) .slide__image {
+  object-position: 50% 60%;
+}
