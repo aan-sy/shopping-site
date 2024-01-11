@@ -10,8 +10,6 @@ export default function Cart() {
   const { cartQuery: {isLoading, data: cartItems} } = useCart();
   const hasItem = cartItems && cartItems.length > 0;
 
-  cartItems && console.log(cartItems)
-
   const totalPrice = cartItems && cartItems.reduce((accum, item) => {
     return accum + (item.price * item.quantity)
   }, 0);
